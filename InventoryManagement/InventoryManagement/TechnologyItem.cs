@@ -10,9 +10,13 @@ namespace InventoryManagement
     {
         public Boolean BatteryBoolean { get; set; }
 
-        public TechnologyItem(Guid serialNumberGuid, string description, TimeSpan monthsOfWarrantyRemainingTimeSpan,
-            int priceOnPurchase, Manufacturer manufacturer, Boolean batteryBoolean)
-            : base(serialNumberGuid, description, monthsOfWarrantyRemainingTimeSpan, priceOnPurchase, manufacturer)
+        public TechnologyItem()
+        {
+
+        }
+        public TechnologyItem(string description, DateTime dateOfWarrantyEnd,
+            int priceOnPurchase, Boolean batteryBoolean)
+            : base(description, dateOfWarrantyEnd, priceOnPurchase )
         {
             BatteryBoolean = batteryBoolean;
         }

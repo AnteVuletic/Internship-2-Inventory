@@ -9,20 +9,22 @@ namespace InventoryManagement
 {
     public class Item
     {
-        public Guid SerialNumberGuid { get; set; }
+        public static Guid SerialNumberGuid { get; set; }
         public string Description { get; set; }
-        public TimeSpan MonthsOfWarrantyRemainingTimeSpan { get; set; }
+        public DateTime DateOfWarrantyEnd { get; set; }
         public int PriceOnPurchase { get; set; }
-        public Manufacturer Manufacturer { get; set; }
 
-        public Item(Guid serialNumberGuid, string description, TimeSpan monthsOfWarrantyRemainingTimeSpan,
-            int priceOnPurchase, Manufacturer manufacturer)
+        public Item()
         {
-            SerialNumberGuid = serialNumberGuid;
+
+        }
+        public Item(string description, DateTime dateOfWarrantyEnd,
+            int priceOnPurchase)
+        {
+            SerialNumberGuid = Guid.NewGuid();
             Description = description;
-            MonthsOfWarrantyRemainingTimeSpan = monthsOfWarrantyRemainingTimeSpan;
+            DateOfWarrantyEnd = dateOfWarrantyEnd;
             PriceOnPurchase = priceOnPurchase;
-            Manufacturer = manufacturer;
         }
 
         public void PrintSerialNumber()
@@ -37,7 +39,7 @@ namespace InventoryManagement
 
         public void PrintMonthsLeftUntilEndOfWarranty()
         {
-            Console.WriteLine("Months left until warranty is finished: " + MonthsOfWarrantyRemainingTimeSpan);
+            Console.WriteLine($"Months left until warranty is finished:{(DateOfWarrantyEnd.Month - DateTime.Now.Month)} ");
         }
 
         public void PrintPriceOnPurchase()
