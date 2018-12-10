@@ -12,7 +12,7 @@ namespace InventoryManagement
         public User VehicleUser { get; set; }
 
         public Vehicle(Guid serialNumberGuid, string description, TimeSpan monthsOfWarrantyRemainingTimeSpan,
-            int priceOnPurchase, int manufacturer,DateTime registrationDateTime, string nameOfUser, string surnameOfUser)
+            int priceOnPurchase, Manufacturer manufacturer,DateTime registrationDateTime, string nameOfUser, string surnameOfUser)
             : base(serialNumberGuid, description, monthsOfWarrantyRemainingTimeSpan, priceOnPurchase, manufacturer)
         {
             RegistrationDateTime = registrationDateTime;
@@ -20,7 +20,7 @@ namespace InventoryManagement
             VehicleUser.SurnameOfUser = surnameOfUser;
         }
         public Vehicle(Guid serialNumberGuid, string description, TimeSpan monthsOfWarrantyRemainingTimeSpan,
-            int priceOnPurchase, int manufacturer, DateTime registrationDateTime, User vehicleUser)
+            int priceOnPurchase, Manufacturer manufacturer, DateTime registrationDateTime, User vehicleUser)
             : base(serialNumberGuid, description, monthsOfWarrantyRemainingTimeSpan, priceOnPurchase, manufacturer)
         {
             RegistrationDateTime = registrationDateTime;

@@ -13,7 +13,7 @@ namespace InventoryManagement
 
         public MobilephoneTechnologyItem(Guid serialNumberGuid, string description,
             TimeSpan monthsOfWarrantyRemainingTimeSpan,
-            int priceOnPurchase, int manufacturer, Boolean batteryBoolean, string phoneNumber, string nameOfUser,
+            int priceOnPurchase, Manufacturer manufacturer, Boolean batteryBoolean, string phoneNumber, string nameOfUser,
             string surnameOfUser)
             : base(serialNumberGuid, description, monthsOfWarrantyRemainingTimeSpan, priceOnPurchase, manufacturer,
                 batteryBoolean)
@@ -24,7 +24,7 @@ namespace InventoryManagement
         }
         public MobilephoneTechnologyItem(Guid serialNumberGuid, string description,
             TimeSpan monthsOfWarrantyRemainingTimeSpan,
-            int priceOnPurchase, int manufacturer, Boolean batteryBoolean, string phoneNumber, User mobilephoneUser)
+            int priceOnPurchase, Manufacturer manufacturer, Boolean batteryBoolean, string phoneNumber, User mobilephoneUser)
             : base(serialNumberGuid, description, monthsOfWarrantyRemainingTimeSpan, priceOnPurchase, manufacturer,
                 batteryBoolean)
         {

@@ -12,4 +12,38 @@ namespace InventoryManagement
         {
         }
     }
+
+    public enum Manufacturer
+    {
+        Toyota,
+        Mercedes,
+        Audi,
+        Skoda,
+        Opel,
+        LandRover,
+        RangeRover,
+        Fiat,
+        Nissan,
+        Lenovo,
+        Samsung,
+        Apple,
+        Motorola,
+        Pocophone,
+        Gsmart,
+        Huawei,
+        Asus,
+        Alienware,
+        Microsoft,
+        Dell,
+        Toshiba
+    }
+
+    public enum OperatingSystems
+    {
+        Windows,
+        Ubuntu,
+        Linux,
+        Lubuntu,
+        MacOs
+    }
 }
