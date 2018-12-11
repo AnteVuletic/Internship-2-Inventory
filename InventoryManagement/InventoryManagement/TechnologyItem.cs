@@ -15,8 +15,8 @@ namespace InventoryManagement
 
         }
         public TechnologyItem(string description, DateTime dateOfWarrantyEnd,
-            int priceOnPurchase, Boolean batteryBoolean)
-            : base(description, dateOfWarrantyEnd, priceOnPurchase )
+            int priceOnPurchase, DateTime dateOfPurchase, Boolean batteryBoolean)
+            : base(description, dateOfWarrantyEnd, priceOnPurchase, dateOfPurchase)
         {
             BatteryBoolean = batteryBoolean;
         }

@@ -11,29 +11,32 @@ namespace InventoryManagement
         public DateTime RegistrationDateTime{ get; set; }
         public User VehicleUser { get; set; }
         public VehicleManufacturer Manufacturer { get; set; }
+        public int DistanceTraveledWithVehicle { get; set; }
 
         public VehicleItem():base()
         {
 
         }
         public VehicleItem( string description, DateTime dateOfWarrantyEnd,
-            int priceOnPurchase, VehicleManufacturer manufacturer,DateTime registrationDateTime, string nameOfUser, string surnameOfUser)
-            : base( description, dateOfWarrantyEnd, priceOnPurchase)
+            int priceOnPurchase,DateTime dateOfPurchase, VehicleManufacturer manufacturer,DateTime registrationDateTime, string nameOfUser, string surnameOfUser,int distanceTraveledWithVehicle)
+            : base( description, dateOfWarrantyEnd, priceOnPurchase, dateOfPurchase)
         {
+            DistanceTraveledWithVehicle = distanceTraveledWithVehicle;
             RegistrationDateTime = registrationDateTime;
             VehicleUser.NameOfUser = nameOfUser;
             VehicleUser.SurnameOfUser = surnameOfUser;
         }
         public VehicleItem( string description, DateTime dateOfWarrantyEnd,
-            int priceOnPurchase, VehicleManufacturer manufacturer, DateTime registrationDateTime, User vehicleUser)
-            : base( description, dateOfWarrantyEnd, priceOnPurchase)
+            int priceOnPurchase,DateTime dateOfPurchase , VehicleManufacturer manufacturer, DateTime registrationDateTime, User vehicleUser, int distanceTraveledWithVehicle)
+            : base( description, dateOfWarrantyEnd, priceOnPurchase, dateOfPurchase)
         {
+            DistanceTraveledWithVehicle = distanceTraveledWithVehicle;
             RegistrationDateTime = registrationDateTime;
             VehicleUser = vehicleUser;
             Manufacturer = manufacturer;
         }
 
-        public VehicleItem[] FillVehiclesWithDummyValues(User[] usersPassed)
+        public VehicleItem[] FillVehiclesWithDummyValues(List<User> usersPassed)
         {
             var vehicleArray = new VehicleItem[10];
             for (var vehicleIterator = 0; vehicleIterator < vehicleArray.Length; vehicleIterator ++)
@@ -45,12 +48,27 @@ namespace InventoryManagement
                     ("This is an dummy description for vehicle " + vehicleIterator),
                     (new DateTime(2018,1+vehicleIterator,1)),
                     (1000 * (1+vehicleIterator)),
+                    (new DateTime(2017,1+vehicleIterator,1)),
                     randomManufacturer,
                     (new DateTime(2018,2 + vehicleIterator,1)),
-                    usersPassed[new Random(vehicleIterator).Next(0,usersPassed.Length)]);
+                    usersPassed[new Random(vehicleIterator).Next(0,usersPassed.Count-1)],
+                    random.Next(10000,150000));
             }
 
             return vehicleArray;
+        }
+
+        public Boolean IsRegistrationWithinMonth()
+        {
+            return DateTime.Now.Month - RegistrationDateTime.Month == 1;
+        }
+
+        public int GetRealValue()
+        {
+            var modifierIndex = DistanceTraveledWithVehicle/20000;
+            if (modifierIndex > 8)
+                modifierIndex = 8;
+            return PriceOnPurchase * (1 - (modifierIndex / 10));
         }
     }
 }

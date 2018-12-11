@@ -9,42 +9,39 @@ namespace InventoryManagement
 {
     public class Item
     {
-        public static Guid SerialNumberGuid { get; set; }
+        public static Guid SerialNumberGuid { get; private set; }
         public string Description { get; set; }
         public DateTime DateOfWarrantyEnd { get; set; }
         public int PriceOnPurchase { get; set; }
+        public DateTime DateOfPurchase { get; set; }
 
         public Item()
         {
 
         }
         public Item(string description, DateTime dateOfWarrantyEnd,
-            int priceOnPurchase)
+            int priceOnPurchase,DateTime dateOfPurchase)
         {
             SerialNumberGuid = Guid.NewGuid();
             Description = description;
             DateOfWarrantyEnd = dateOfWarrantyEnd;
             PriceOnPurchase = priceOnPurchase;
+            DateOfPurchase = dateOfPurchase;
         }
 
-        public void PrintSerialNumber()
+        public Guid GetGuid()
         {
-            Console.WriteLine("Serial number of the item is: " + SerialNumberGuid);
+            return SerialNumberGuid;
         }
 
-        public void PrintDescription()
+        public Boolean IsGuid(Guid argPassedGuid)
         {
-            Console.WriteLine("Description of item is: " + Description);
+            return SerialNumberGuid == argPassedGuid;
         }
 
-        public void PrintMonthsLeftUntilEndOfWarranty()
+        public Boolean IsWarrantyEndYear(DateTime argYearPassed)
         {
-            Console.WriteLine($"Months left until warranty is finished:{(DateOfWarrantyEnd.Month - DateTime.Now.Month)} ");
-        }
-
-        public void PrintPriceOnPurchase()
-        {
-            Console.WriteLine("Price on purchase was: " + PriceOnPurchase);
+            return DateOfWarrantyEnd.Year == argYearPassed.Year;
         }
     }
 }

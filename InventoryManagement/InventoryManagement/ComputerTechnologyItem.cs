@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,9 +18,8 @@ namespace InventoryManagement
 
         }
         public ComputerTechnologyItem(string description,DateTime dateOfWarrantyEnd,
-            int priceOnPurchase, ComputerManufacturer manufacturer, Boolean batteryBoolean, OperatingSystems operatingSystem, Boolean portable)
-            : base(description, dateOfWarrantyEnd, priceOnPurchase,
-                batteryBoolean)
+            int priceOnPurchase,DateTime dateOfPurchase, ComputerManufacturer manufacturer, Boolean batteryBoolean, OperatingSystems operatingSystem, Boolean portable)
+            : base(description, dateOfWarrantyEnd, priceOnPurchase, dateOfPurchase, batteryBoolean)
         {
             OperatingSystem = operatingSystem;
             Portable = portable;
@@ -46,14 +46,28 @@ namespace InventoryManagement
                     ("This is just an dummy description for computer " + computerIterator),
                     (new DateTime(2019, 1 + computerIterator, 1)),
                     (1000 * (computerIterator + 1)),
-                    randomComputerManufacturer,
+                    (new DateTime(2017, 1 + computerIterator, 1)),
+                    randomComputerManufacturer, 
                     batteryAndPortableInterchange,
                     randomOperatingSystem,
                     batteryAndPortableInterchange);
-
             }
-
             return computerArray;
+        }
+
+        public Boolean IsManufacturer(string argManufacturerPassed)
+        {
+            if (!Enum.GetNames(typeof(ComputerManufacturer)).Contains(argManufacturerPassed))
+                return false;
+            return Manufacturer.ToString() == argManufacturerPassed;
+        }
+
+        public int GetRealValue()
+        {
+            var monthsPassed = DateOfPurchase - DateTime.Now;
+            var modifierIndex = ((int)(monthsPassed.TotalDays) / 30) * 0.05;
+            if (modifierIndex > 0.7) modifierIndex = 0.7;
+            return (int)(PriceOnPurchase * modifierIndex);
         }
     }
 }

@@ -16,11 +16,10 @@ namespace InventoryManagement
         {
 
         }
-        public MobilephoneTechnologyItem(MobilephoneManufacturer manufacturer,string description,
-            DateTime dateOfWarrantyEnd,
-            int priceOnPurchase, Boolean batteryBoolean, string phoneNumber, string nameOfUser,
+        public MobilephoneTechnologyItem(string description,
+            DateTime dateOfWarrantyEnd,int priceOnPurchase, DateTime dateOfPurchase, Boolean batteryBoolean, MobilephoneManufacturer manufacturer, string phoneNumber, string nameOfUser,
             string surnameOfUser)
-            : base(description, dateOfWarrantyEnd, priceOnPurchase,
+            : base(description, dateOfWarrantyEnd, priceOnPurchase, dateOfPurchase,
                 batteryBoolean)
         {
             PhoneNumber = phoneNumber;
@@ -28,17 +27,16 @@ namespace InventoryManagement
             MobilephoneUser.SurnameOfUser = surnameOfUser;
             Manufacturer = manufacturer;
         }
-        public MobilephoneTechnologyItem(MobilephoneManufacturer manufacturer,string description,
-            DateTime dateOfWarrantyEnd,
-            int priceOnPurchase, Boolean batteryBoolean, string phoneNumber, User mobilephoneUser)
-            : base(description, dateOfWarrantyEnd, priceOnPurchase,
+        public MobilephoneTechnologyItem(string description,
+            DateTime dateOfWarrantyEnd,int priceOnPurchase, DateTime dateOfPurchase, Boolean batteryBoolean, MobilephoneManufacturer manufacturer, string phoneNumber, User mobilephoneUser)
+            : base(description, dateOfWarrantyEnd, priceOnPurchase, dateOfPurchase,
                 batteryBoolean)
         {
             PhoneNumber = phoneNumber;
             MobilephoneUser = mobilephoneUser;
             Manufacturer = manufacturer;
         }
-        public MobilephoneTechnologyItem[] FillMobilesphonesWithDummyItems(User[] usersPassed)
+        public MobilephoneTechnologyItem[] FillMobilesphonesWithDummyItems(List<User> usersPassed)
         {
             var mobilephoneArray = new MobilephoneTechnologyItem[10];
             for (var mobileIterator = 0; mobileIterator < mobilephoneArray.Length; mobileIterator++)
@@ -52,17 +50,25 @@ namespace InventoryManagement
                     randomStringForNumber += (random.Next(0, 9)).ToString();
                 }
                 mobilephoneArray[mobileIterator] = new MobilephoneTechnologyItem(
-                    randomManufacturer,
                     ("This is an dummy description of an mobile phone:" + mobileIterator),
                     (new DateTime(2019,1+mobileIterator,1)),
-                    (1000 * (mobileIterator+1)),
+                    (100 * (mobileIterator+1)),
+                    (new DateTime(2018, 1 + mobileIterator, 1)),
                     true,
+                    randomManufacturer,
                     ("09"+randomStringForNumber),
-                    usersPassed[new Random(mobileIterator).Next(0,usersPassed.Length)]);
+                    usersPassed[new Random(mobileIterator).Next(0,usersPassed.Count-1)]);
                 
             }
-
             return mobilephoneArray;
+        }
+
+        public Boolean IsManufacturer(string argManufacturerPassed)
+        {
+            if (!Enum.GetNames(typeof(MobilephoneManufacturer)).Contains(argManufacturerPassed))
+                return false;
+
+            return Manufacturer.ToString() == argManufacturerPassed;
         }
 
     }

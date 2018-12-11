@@ -11,10 +11,11 @@ namespace InventoryManagement
     {
         public static void Main(string[] args)
         {
-            var userArray = new User().FillWithDummyUsers();
-            var vehicleArray = new VehicleItem().FillVehiclesWithDummyValues(userArray);
-            var mobilephoneArray = new MobilephoneTechnologyItem().FillMobilesphonesWithDummyItems(userArray);
-            var computerArray = new ComputerTechnologyItem().FillComputerTechnologyWithDummyItems();
+            var userArray = new List<User>(new User().FillWithDummyUsers());
+            var vehicleArray = new List<VehicleItem>(new VehicleItem().FillVehiclesWithDummyValues(userArray));
+            var mobilephoneArray = new List<MobilephoneTechnologyItem>(new MobilephoneTechnologyItem().FillMobilesphonesWithDummyItems(userArray));
+            var computerArray = new List<ComputerTechnologyItem>(new ComputerTechnologyItem().FillComputerTechnologyWithDummyItems());
+
         }
     }
 
@@ -39,7 +40,8 @@ namespace InventoryManagement
         Motorola,
         Pocophone,
         Gsmart,
-        Huawei
+        Huawei,
+        Sony
     }
 
     public enum ComputerManufacturer
