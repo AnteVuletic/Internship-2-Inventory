@@ -121,7 +121,7 @@ namespace InventoryManagement
                                             }
                                         }
 
-                                        Console.WriteLine("User not found.");
+                                        Console.WriteLine("Phone not found.");
                                         break;
                                     }
                                     default:
@@ -133,6 +133,107 @@ namespace InventoryManagement
                             } while (choiceForSubMenu == 0);
                             break;
                         }
+                        case 3:
+                        {
+                            do
+                            {
+                                Console.Clear();
+                                Console.WriteLine(" _______________________________________________________________________ ");
+                                Console.WriteLine("|                                                                       |");
+                                Console.WriteLine("| 1. Add an computer to the existing computer database.                 |");
+                                Console.WriteLine("| 2. Delete an computer by entering Guid.                               |");
+                                Console.WriteLine("|        [Optionally enter any value to exit to main menu]              |");
+                                Console.WriteLine("|_______________________________________________________________________|");
+                                int.TryParse(Console.ReadLine(), out choiceForSubMenu);
+                                switch (choiceForSubMenu)
+                                {
+                                    case 1:
+                                    {
+                                        computerList.Add(new ComputerTechnologyItem().AddComputer());
+                                        break;
+                                    }
+                                    case 2:
+                                    {
+                                        Console.WriteLine("Enter value of Guid [or unique start of guid] of computer you wish to delete.");
+                                        var idInputed = Console.ReadLine();
+                                        foreach (var computer in computerList)
+                                        {
+                                            if (computer.IsGuid(idInputed))
+                                            {
+                                                Console.WriteLine("Are you sure you want to delete:");
+                                                computer.PrintComputerInfo();
+                                                Console.WriteLine("Delete: y[es]/n[o]");
+                                                if (Console.ReadKey().Key == ConsoleKey.Y)
+                                                    computerList.Remove(computer);
+                                                break;
+                                            }
+                                        }
+
+                                        Console.WriteLine("Computer not found.");
+                                                break;
+                                    }
+                                    default:
+                                    {
+                                        choiceForSubMenu = 0;
+                                        break;
+                                    }
+                                }
+                            } while (choiceForSubMenu == 0);
+                            break;
+                        }
+                        case 4:
+                        {
+                            do
+                            {
+                                Console.Clear();
+                                Console.WriteLine(
+                                    " _______________________________________________________________________ ");
+                                Console.WriteLine(
+                                    "|                                                                       |");
+                                Console.WriteLine(
+                                    "| 1. Add an vehicle to the existing vehicle database.                   |");
+                                Console.WriteLine(
+                                    "| 2. Delete an vehicle by entering Guid.                                |");
+                                Console.WriteLine(
+                                    "|        [Optionally enter any value to exit to main menu]              |");
+                                Console.WriteLine(
+                                    "|_______________________________________________________________________|");
+                                int.TryParse(Console.ReadLine(), out choiceForSubMenu);
+                                switch (choiceForSubMenu)
+                                {
+                                    case 1:
+                                    {
+                                        vehicleList.Add(new VehicleItem().AddVehicle(userList));
+                                        break;
+                                    }
+                                    case 2:
+                                    {
+                                        Console.WriteLine("Enter value of Guid [or unique start of guid] of vehicle you wish to delete.");
+                                        var idInputed = Console.ReadLine();
+                                        foreach (var vehicle in vehicleList)
+                                        {
+                                            if (vehicle.IsGuid(idInputed))
+                                            {
+                                                Console.WriteLine("Are you sure you want to delete:");
+                                                vehicle.PrintVehicleInfo();
+                                                Console.WriteLine("Delete: y[es]/n[o]");
+                                                if (Console.ReadKey().Key == ConsoleKey.Y)
+                                                    vehicleList.Remove(vehicle);
+                                                break;
+                                            }
+                                        }
+                                        Console.WriteLine("Computer not found.");
+                                        break;
+                                    }
+                                    default:
+                                    {
+                                        choiceForSubMenu = 0;
+                                        break;
+                                    }
+                                }
+                            } while (choiceForSubMenu == 0);
+                                    break;
+                        }
                         case 5:
                         {
                             PrintUserList(userList);
@@ -143,6 +244,20 @@ namespace InventoryManagement
                         case 6:
                         {
                             PrintMobilephoneList(mobileList);
+                            Console.WriteLine("Press any button to return to main menu.");
+                            Console.ReadKey();
+                            break;
+                        }
+                        case 7:
+                        {
+                            PrintComputerList(computerList);
+                            Console.WriteLine("Press any button to return to main menu.");
+                            Console.ReadKey();
+                            break;
+                        }
+                        case 8:
+                        {
+                            PrintVehicleList(vehicleList);
                             Console.WriteLine("Press any button to return to main menu.");
                             Console.ReadKey();
                             break;
@@ -193,8 +308,8 @@ namespace InventoryManagement
             Console.WriteLine("| 4. Add or remove vehicle inventory data                   |");
             Console.WriteLine("| 5. Print all users                                        |");
             Console.WriteLine("| 6. Run requests on mobile inventory data                  |");
-            Console.WriteLine("| 7. Run requests on vehicle inventory data                 |");
-            Console.WriteLine("| 8. Run requests computer inventory data                   |");
+            Console.WriteLine("| 7. Run requests computer inventory data                   |");
+            Console.WriteLine("| 8. Run requests on vehicle inventory data                 |");
             Console.WriteLine("| 9. Press this to generate random data for every inventory |");
             Console.WriteLine("|                                                           |");
             Console.WriteLine("|      Any number choice not within the given number        |");

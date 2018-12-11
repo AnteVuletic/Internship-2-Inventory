@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Eventing.Reader;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -33,7 +34,7 @@ namespace InventoryManagement
             Console.WriteLine($" Computer guid: {SerialNumberGuid}");
             Console.WriteLine(Portable ? $" Computer is portable." : $" Computer is not portable");
             Console.WriteLine($" Computer OS is: {OperatingSystem}");
-            Console.WriteLine($" Computer Model: {Manufacturer}");
+            Console.WriteLine($" Computer manufacturer: {Manufacturer}");
             Console.WriteLine($" Computer description: {Description}");
             Console.WriteLine($" Computer warranty end: {DateOfWarrantyEnd.Month}/{DateOfWarrantyEnd.Year}");
             Console.WriteLine($" Computer price on purchase: {PriceOnPurchase} $");
@@ -42,6 +43,37 @@ namespace InventoryManagement
             Console.WriteLine();
         }
 
+        public ComputerTechnologyItem AddComputer()
+        {
+            var stagingComputer = new ComputerTechnologyItem();
+            Console.WriteLine("Please enter manufacturer of the computer:");
+            var manufacturerString = Console.ReadLine();
+            if (Enum.TryParse(manufacturerString, out ComputerManufacturer tmpManufacturer))
+                stagingComputer.Manufacturer = tmpManufacturer;
+            else
+                Console.WriteLine("Not an manufacturer we support");
+            Console.WriteLine("Please enter the OS of the computer:");
+            var operatingSystem = Console.ReadLine();
+            if (Enum.TryParse(operatingSystem, out OperatingSystems tmpOperatingSystems))
+                stagingComputer.OperatingSystem = tmpOperatingSystems;
+            else
+                Console.WriteLine("Not an Operating system we support.");
+            Console.WriteLine("Please enter an description of the computer:");
+            stagingComputer.Description = Console.ReadLine();
+            Console.WriteLine("You will be prompted to enter values regarding warranty.");
+            stagingComputer.DateOfWarrantyEnd = TestDateTimeInput();
+            Console.WriteLine("Please enter purchase price:");
+            stagingComputer.PriceOnPurchase = int.Parse(Console.ReadLine());
+            stagingComputer.DateOfPurchase = DateTime.Now;
+            Console.WriteLine("Is the computer portable: y[es]/n[o]");
+            stagingComputer.Portable = Console.ReadKey().Key == ConsoleKey.Y;
+            Console.WriteLine();
+            Console.WriteLine("Does the computer have an battery: y[es]/n[o]");
+            stagingComputer.BatteryBoolean = Console.ReadKey().Key == ConsoleKey.Y;
+            Console.WriteLine();
+            return stagingComputer;
+
+        }
         public ComputerTechnologyItem[] FillComputerTechnologyWithDummyItems()
         {
             var computerArray = new ComputerTechnologyItem[10];

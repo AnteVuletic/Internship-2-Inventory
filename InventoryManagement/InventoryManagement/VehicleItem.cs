@@ -47,13 +47,56 @@ namespace InventoryManagement
             Console.WriteLine($" User of vehicle surname: {VehicleUser.SurnameOfUser}");
             Console.WriteLine($" Vehicle Model: {Manufacturer}");
             Console.WriteLine($" Vehicle distance ran: {DistanceTraveledWithVehicle} km");
-            Console.WriteLine($" Registration date: {RegistrationDateTime.Day}/{RegistrationDateTime.Month}/{RegistrationDateTime.Year}");
+            Console.WriteLine($" Registration date: {RegistrationDateTime.Day}/{RegistrationDateTime.Month}");
             Console.WriteLine($" Vehicle description: {Description}");
             Console.WriteLine($" Vehicle warranty end: {DateOfWarrantyEnd.Month}/{DateOfWarrantyEnd.Year}");
             Console.WriteLine($" Vehicle price on purchase: {PriceOnPurchase} $");
             Console.WriteLine($" Vehicle date of purchase: {DateOfPurchase.Month}/{DateOfPurchase.Year}");
             Console.WriteLine("________________________________________________");
             Console.WriteLine();
+        }
+
+        public VehicleItem AddVehicle(List<User> argListOfUsers)
+        {
+            var stagingVehicle = new VehicleItem();
+            Console.WriteLine("Please enter the id of the intended user of this vehicle:");
+            var idInputed = int.Parse(Console.ReadLine());
+            foreach (var user in argListOfUsers)
+            {
+                if (user.IdUser == idInputed)
+                    stagingVehicle.VehicleUser = user;
+            }
+            Console.WriteLine("Please enter the vehicle manufacturer:");
+            var manufacturerString = Console.ReadLine();
+            if (Enum.TryParse(manufacturerString, out VehicleManufacturer tmpManufacturer))
+                stagingVehicle.Manufacturer = tmpManufacturer;
+            else
+                Console.WriteLine("Not an manufacturer we support");
+            Console.WriteLine("What is the total distance traveled of the vehicle:");
+            stagingVehicle.DistanceTraveledWithVehicle = int.Parse(Console.ReadLine());
+            Console.WriteLine("You will be prompted to entered values regarding vehicle registration date.");
+            try
+            {
+                Console.WriteLine("Please enter month of registration date:");
+                var monthOfReg = int.Parse(Console.ReadLine());
+                Console.WriteLine("Please enter day of registration date:");
+                var dayOfReg = int.Parse(Console.ReadLine());
+                stagingVehicle.RegistrationDateTime = new DateTime(2000, monthOfReg, dayOfReg);
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("Error! Was expecting number values.");
+                stagingVehicle.RegistrationDateTime =  new DateTime(9999, 99, 99);
+            }
+            Console.WriteLine("Please enter an description of the vehicle:");
+            stagingVehicle.Description = Console.ReadLine();
+            Console.WriteLine("You will be prompted to enter values regarding vehicle warranty date.");
+            stagingVehicle.DateOfWarrantyEnd = TestDateTimeInput();
+            Console.WriteLine("Please enter the vehicles price when purchased.");
+            stagingVehicle.PriceOnPurchase = int.Parse(Console.ReadLine());
+            stagingVehicle.DateOfPurchase = DateTime.Now;
+            return stagingVehicle;
+
         }
         public VehicleItem[] FillVehiclesWithDummyValues(List<User> usersPassed)
         {
@@ -73,7 +116,6 @@ namespace InventoryManagement
                     usersPassed[new Random(vehicleIterator).Next(0,usersPassed.Count-1)],
                     random.Next(10000,150000));
             }
-
             return vehicleArray;
         }
 

@@ -49,21 +49,8 @@ namespace InventoryManagement
             Console.WriteLine();
             Console.WriteLine("Please enter description of the item:");
             stagingPhone.Description = Console.ReadLine();
-            try
-            {
-                Console.WriteLine("Please enter year of warranty date:");
-                var year = int.Parse(Console.ReadLine());
-                Console.WriteLine("Please enter month of warranty date:");
-                var month = int.Parse(Console.ReadLine());
-                Console.WriteLine("Please enter day of warranty date");
-                var day = int.Parse(Console.ReadLine());
-                stagingPhone.DateOfWarrantyEnd = new DateTime(year, month, day);
-            }
-            catch (FormatException)
-            {
-                Console.WriteLine("Error! Was expecting number values.");
-                return stagingPhone;
-            }
+            Console.WriteLine("You will be prompted to enter values regarding warranty.");
+            stagingPhone.DateOfWarrantyEnd = TestDateTimeInput();
             Console.WriteLine("Please enter the id of the intended user of this phone:");
             var idInputed = int.Parse(Console.ReadLine());
             foreach (var user in argListOfUsers)
