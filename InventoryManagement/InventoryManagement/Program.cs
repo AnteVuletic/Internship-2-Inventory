@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
+using Console = System.Console;
 
 namespace InventoryManagement
 {
@@ -34,36 +35,114 @@ namespace InventoryManagement
                         case 1:
                         { 
                             do {
-                                if (!(int.TryParse(Console.ReadLine(), out choiceForSubMenu)))
+                                Console.Clear();
+                                Console.WriteLine(" _______________________________________________________________________ ");
+                                Console.WriteLine("|                                                                       |");
+                                Console.WriteLine("| 1. Add an user to the existing user database.                         |");
+                                Console.WriteLine("| 2. Delete an user by entering his ID.                                 |");
+                                Console.WriteLine("|        [Optionally enter any value to exit to main menu]              |");
+                                Console.WriteLine("|_______________________________________________________________________|");
+                                int.TryParse(Console.ReadLine(), out choiceForSubMenu);
+                                switch (choiceForSubMenu)
                                 {
-                                    Console.Clear();
-                                    Console.WriteLine(" _______________________________________________________________________ ");
-                                    Console.WriteLine("|                                                                       |");
-                                    Console.WriteLine("| 1. Add an user to the existing user database.                         |");
-                                    Console.WriteLine("| 2. Delete an user by entering his guid ( or unique part of his guid): |");
-                                    Console.WriteLine("|        [Optionally enter any value to exit to main menu]              |");
-                                    Console.WriteLine("|_______________________________________________________________________|");
-                                        switch (choiceForSubMenu)
+                                    case 1:
+                                    {
+                                        userList.Add(new User().AddUser());
+                                        break;
+                                    }
+                                    case 2:
+                                    {
+                                        Console.WriteLine("Enter value of ID of user you wish to delete.");
+                                        var idInputed = int.Parse(Console.ReadLine());
+                                        foreach (var user in userList)
                                         {
-                                            case 1:
+                                            if (user.IdUser == idInputed)
                                             {
-                                                userList.Add(new User().AddUser());
-                                                break;
-                                            }
-                                            default:
-                                            {
-                                                choiceForSubMenu = 0;
-                                                Console.WriteLine("Exiting sub-menu.");
+                                                Console.WriteLine("Are you sure you want to delete:");
+                                                user.PrintUserInfo();
+                                                Console.WriteLine("Delete: y[es]/n[o]");
+                                                if(Console.ReadKey().Key == ConsoleKey.Y)
+                                                    userList.Remove(user);
                                                 break;
                                             }
                                         }
+                                        Console.WriteLine("User not found.");
+                                        break;
+                                    }
+                                    default:
+                                    {
+                                        choiceForSubMenu = 0;
+                                        Console.WriteLine("Exiting sub-menu.");
+                                        break;
+                                    }
                                 }
                             }while (choiceForSubMenu == 0) ;
+                            break;
+                        }
+                        case 2:
+                        {
+                            do
+                            {
+                                Console.Clear();
+                                Console.WriteLine(
+                                    " _______________________________________________________________________ ");
+                                Console.WriteLine(
+                                    "|                                                                       |");
+                                Console.WriteLine(
+                                    "| 1. Add an mobilephone to the existing mobilephone database.           |");
+                                Console.WriteLine(
+                                    "| 2. Delete an mobilephone by entering Guid.                            |");
+                                Console.WriteLine(
+                                    "|        [Optionally enter any value to exit to main menu]              |");
+                                Console.WriteLine(
+                                    "|_______________________________________________________________________|");
+                                int.TryParse(Console.ReadLine(), out choiceForSubMenu);
+                                switch (choiceForSubMenu)
+                                {
+                                    case 1:
+                                    {
+                                        mobileList.Add(new MobilephoneTechnologyItem().AddPhone(userList));
+                                        break;
+                                    }
+                                    case 2:
+                                    {
+                                        Console.WriteLine("Enter value of Guid [or unique start of guid] of mobilephone you wish to delete.");
+                                        var idInputed = Console.ReadLine();
+                                        foreach (var phone in mobileList)
+                                        {
+                                            if (phone.IsGuid(idInputed))
+                                            {
+                                                Console.WriteLine("Are you sure you want to delete:");
+                                                phone.PrintMobilephoneInfo();
+                                                Console.WriteLine("Delete: y[es]/n[o]");
+                                                if (Console.ReadKey().Key == ConsoleKey.Y)
+                                                    mobileList.Remove(phone);
+                                                break;
+                                            }
+                                        }
+
+                                        Console.WriteLine("User not found.");
+                                        break;
+                                    }
+                                    default:
+                                    {
+                                        choiceForSubMenu = 0;
+                                        break;
+                                    }
+                                }
+                            } while (choiceForSubMenu == 0);
                             break;
                         }
                         case 5:
                         {
                             PrintUserList(userList);
+                            Console.WriteLine("Press any button to return to main menu.");
+                            Console.ReadKey();
+                            break;
+                        }
+                        case 6:
+                        {
+                            PrintMobilephoneList(mobileList);
                             Console.WriteLine("Press any button to return to main menu.");
                             Console.ReadKey();
                             break;
@@ -152,6 +231,7 @@ namespace InventoryManagement
                 computerTechnologyItem.PrintComputerInfo();
             }
         }
+
     }
 
     public enum VehicleManufacturer

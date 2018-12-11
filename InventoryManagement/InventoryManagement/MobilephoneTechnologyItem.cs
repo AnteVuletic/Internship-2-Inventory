@@ -36,11 +36,56 @@ namespace InventoryManagement
             MobilephoneUser = mobilephoneUser;
             Manufacturer = manufacturer;
         }
+
+        public MobilephoneTechnologyItem AddPhone(List<User> argListOfUsers)
+        {
+            var stagingPhone = new MobilephoneTechnologyItem();
+            Console.WriteLine("Please enter phone number:");
+            stagingPhone.PhoneNumber = Console.ReadLine();
+            Console.WriteLine("Please enter price on purchase:");
+            stagingPhone.PriceOnPurchase = int.Parse(Console.ReadLine());
+            Console.WriteLine("Battery y[es]/n[o]?");
+            stagingPhone.BatteryBoolean = Console.ReadKey().Key == ConsoleKey.Y;
+            Console.WriteLine();
+            Console.WriteLine("Please enter description of the item:");
+            stagingPhone.Description = Console.ReadLine();
+            try
+            {
+                Console.WriteLine("Please enter year of warranty date:");
+                var year = int.Parse(Console.ReadLine());
+                Console.WriteLine("Please enter month of warranty date:");
+                var month = int.Parse(Console.ReadLine());
+                Console.WriteLine("Please enter day of warranty date");
+                var day = int.Parse(Console.ReadLine());
+                stagingPhone.DateOfWarrantyEnd = new DateTime(year, month, day);
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("Error! Was expecting number values.");
+                return stagingPhone;
+            }
+            Console.WriteLine("Please enter the id of the intended user of this phone:");
+            var idInputed = int.Parse(Console.ReadLine());
+            foreach (var user in argListOfUsers)
+            {
+                if (user.IdUser == idInputed)
+                    stagingPhone.MobilephoneUser = user;
+            }
+            Console.WriteLine("Please enter model of phone:");
+            var manufacturerString = Console.ReadLine();
+            if (Enum.TryParse(manufacturerString, out MobilephoneManufacturer tmpManufacturer))
+                stagingPhone.Manufacturer = tmpManufacturer;
+            else
+                Console.WriteLine("Not an manufacturer we support");
+            stagingPhone.DateOfPurchase = DateTime.Now;
+
+            return stagingPhone;
+        }
         public void PrintMobilephoneInfo()
         {
             Console.WriteLine(" _______________________________________________ ");
             Console.WriteLine("                                 ");
-            Console.WriteLine($" Vehicle guid: {SerialNumberGuid}");
+            Console.WriteLine($" Mobilephone guid: {SerialNumberGuid}");
             Console.WriteLine($" User of mobilephone ID: {MobilephoneUser.IdUser}");
             Console.WriteLine($" User of mobilephone name: {MobilephoneUser.NameOfUser}");
             Console.WriteLine($" User of mobilephone surname: {MobilephoneUser.SurnameOfUser}");

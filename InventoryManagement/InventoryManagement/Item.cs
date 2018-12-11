@@ -17,7 +17,7 @@ namespace InventoryManagement
 
         public Item()
         {
-
+            SerialNumberGuid = Guid.NewGuid();
         }
         public Item(string description, DateTime dateOfWarrantyEnd,
             int priceOnPurchase,DateTime dateOfPurchase)
@@ -29,9 +29,9 @@ namespace InventoryManagement
             DateOfPurchase = dateOfPurchase;
         }
 
-        public Boolean IsGuid(Guid argPassedGuid)
+        public Boolean IsGuid(string argPassedGuid)
         {
-            return SerialNumberGuid == argPassedGuid;
+            return SerialNumberGuid.ToString().Contains(argPassedGuid);
         }
 
         public Boolean IsWarrantyEndYear(DateTime argYearPassed)
