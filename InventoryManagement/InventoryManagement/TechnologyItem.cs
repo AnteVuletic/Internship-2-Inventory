@@ -20,5 +20,13 @@ namespace InventoryManagement
         {
             BatteryBoolean = batteryBoolean;
         }
+        public int GetRealValue()
+        {
+            var monthsPassed = DateTime.Now - DateOfPurchase;
+            var modifierIndex = (double)(((monthsPassed.TotalDays/30)) * 0.05);
+            modifierIndex = 1 - modifierIndex;
+            if (modifierIndex < 0.3) modifierIndex = 0.3;
+            return (int)(PriceOnPurchase * modifierIndex);
+        }
     }
 }

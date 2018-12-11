@@ -52,9 +52,9 @@ namespace InventoryManagement
             return SerialNumberGuid.ToString().Contains(argPassedGuid);
         }
 
-        public Boolean IsWarrantyEndYear(DateTime argYearPassed)
+        public Boolean IsWarrantyEndYear(int argYearPassed)
         {
-            return DateOfWarrantyEnd.Year == argYearPassed.Year;
+            return DateOfWarrantyEnd.Year == argYearPassed;
         }
     }
 }

@@ -243,9 +243,115 @@ namespace InventoryManagement
                         }
                         case 6:
                         {
-                            PrintMobilephoneList(mobileList);
-                            Console.WriteLine("Press any button to return to main menu.");
-                            Console.ReadKey();
+                            do
+                            {
+                                Console.Clear();
+                                Console.WriteLine(" __________________________________________________________________ ");
+                                Console.WriteLine("|                                                                  |");
+                                Console.WriteLine("| 1.Print all mobile inventory                                     |");
+                                Console.WriteLine("| 2.Print depending on serial entered                              |");
+                                Console.WriteLine("| 3.Print all phones by entered manufacturer                       |");
+                                Console.WriteLine("| 4.Print users who's phones warranty is expiring in year entered  |");
+                                Console.WriteLine("| 5.Current estimated value of phone. [Enter serial]               |");
+                                Console.WriteLine("|   [Optionally enter any value to return to main menu]            |");
+                                Console.WriteLine("|__________________________________________________________________|");
+                                int.TryParse(Console.ReadLine(), out choiceForSubMenu);
+                                    switch (choiceForSubMenu)
+                                {
+                                    case 1:
+                                    {
+                                        Console.Clear();
+                                        PrintMobilephoneList(mobileList);
+                                        Console.WriteLine("Press any button to return to sub menu.");
+                                        Console.ReadKey();
+                                        break;
+                                    }
+                                    case 2:
+                                    {
+                                        var printedSomething = 0;
+                                        Console.WriteLine("Please enter part or whole guid:");
+                                        var enteredSerialNumber = Console.ReadLine();
+                                        Console.Clear();
+                                        foreach (var phone in mobileList)
+                                        {
+                                            if (phone.IsGuid(enteredSerialNumber))
+                                            {
+                                                phone.PrintMobilephoneInfo();
+                                                printedSomething++;
+                                            }
+                                        }                                        
+                                        if(printedSomething == 0)
+                                            Console.Write("Phone not found. ");                                            
+                                        Console.WriteLine("Press any button to return to sub menu.");
+                                        Console.ReadKey();
+                                                break;
+                                    }
+                                    case 3:
+                                    {
+                                        var printedSomething = 0;
+                                        Console.WriteLine("Please enter manufacturer:");
+                                        var manufacturerString = Console.ReadLine();
+                                        Console.Clear();
+                                        foreach (var phone in mobileList)
+                                        {
+                                            if (phone.IsManufacturer(manufacturerString))
+                                            {
+                                                printedSomething++;
+                                                phone.PrintMobilephoneInfo();
+                                            }
+                                        }
+                                        if (printedSomething == 0)
+                                            Console.Write("Phone not found. ");
+                                        Console.WriteLine("Press any button to return to sub menu.");
+                                        Console.ReadKey();
+                                        break;
+                                    }
+                                    case 4:
+                                    {
+                                        Console.WriteLine("Enter year you're interested in:");
+                                        var yearEntered = int.Parse(Console.ReadLine());
+                                        Console.Clear();
+                                        foreach (var phone in mobileList)
+                                        {
+                                            if (phone.IsWarrantyEndYear(yearEntered))
+                                            {
+                                                phone.MobilephoneUser.PrintUserInfo();
+                                                Console.WriteLine();
+                                            }
+                                        }
+                                        Console.WriteLine("Press any button to return to sub menu.");
+                                        Console.ReadKey();
+                                        break;
+                                    }
+                                    case 5:
+                                    {
+                                        var printedSomething = 0;
+                                        Console.WriteLine("Please enter part or whole guid:");
+                                        var enteredSerialNumber = Console.ReadLine();
+                                        Console.Clear();
+                                        foreach (var phone in mobileList)
+                                        {
+                                            if (phone.IsGuid(enteredSerialNumber))
+                                            {
+                                                Console.WriteLine("Estimated value is: " + phone.GetRealValue());
+                                                phone.PrintMobilephoneInfo();
+                                                printedSomething++;
+                                            }
+                                        }
+                                        if (printedSomething == 0)
+                                            Console.Write("Phone not found. ");
+                                        Console.WriteLine("Press any button to return to sub menu.");
+                                        Console.ReadKey();
+                                                break;
+                                    }
+                                    default:
+                                    {
+                                        choiceForSubMenu = 99;
+                                        break;
+                                    }
+                                }
+                                
+                                } while (choiceForSubMenu != 99);
                             break;
                         }
                         case 7:

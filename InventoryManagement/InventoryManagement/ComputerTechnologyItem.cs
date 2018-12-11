@@ -109,13 +109,5 @@ namespace InventoryManagement
                 return false;
             return Manufacturer.ToString() == argManufacturerPassed;
         }
-
-        public int GetRealValue()
-        {
-            var monthsPassed = DateOfPurchase - DateTime.Now;
-            var modifierIndex = ((int)(monthsPassed.TotalDays) / 30) * 0.05;
-            if (modifierIndex > 0.7) modifierIndex = 0.7;
-            return (int)(PriceOnPurchase * modifierIndex);
-        }
     }
 }
