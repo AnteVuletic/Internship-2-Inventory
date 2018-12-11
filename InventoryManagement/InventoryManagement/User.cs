@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,21 +9,35 @@ namespace InventoryManagement
 {
     public class User
     {
-        public static int IdUser { get; private set; }
+        private static int InstanceIterator { get; set; }
+        public int IdUser { get; }
         public string NameOfUser { get; set; }
         public string SurnameOfUser { get; set; }
 
         public User()
         {
-            IdUser++;
+            InstanceIterator++;
+            IdUser = InstanceIterator;
             NameOfUser = " ";
             SurnameOfUser = " ";
         }
         public User(string nameOfUser, string surnameOfUser)
         {
-            IdUser++;
+            InstanceIterator++;
+            IdUser = InstanceIterator;
             NameOfUser = nameOfUser;
             SurnameOfUser = surnameOfUser;
+        }
+
+        public void PrintUserInfo()
+        {
+            Console.WriteLine(" _________________________________ ");
+            Console.WriteLine("                                 ");
+            Console.WriteLine($" User ID: {IdUser}");
+            Console.WriteLine($" User name: {NameOfUser}");
+            Console.WriteLine($" User surname: {SurnameOfUser}");
+            Console.WriteLine("_________________________________");
+            Console.WriteLine();
         }
 
         public User[] FillWithDummyUsers()

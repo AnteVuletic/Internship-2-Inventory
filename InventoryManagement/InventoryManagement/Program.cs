@@ -11,10 +11,10 @@ namespace InventoryManagement
     {
         public static void Main(string[] args)
         {
-            var userArray = new List<User>();
-            var vehicleArray = new List<VehicleItem>();
-            var mobilephoneArray = new List<MobilephoneTechnologyItem>();
-            var computerArray = new List<ComputerTechnologyItem>();
+            var userList = new List<User>();
+            var vehicleList = new List<VehicleItem>();
+            var mobileList = new List<MobilephoneTechnologyItem>();
+            var computerList = new List<ComputerTechnologyItem>();
             var choiceForMenu = 0;
             do
             {
@@ -47,7 +47,7 @@ namespace InventoryManagement
                                         {
                                             case 1:
                                             {
-                                                userArray.Add(new User().AddUser());
+                                                userList.Add(new User().AddUser());
                                                 break;
                                             }
                                             default:
@@ -61,12 +61,34 @@ namespace InventoryManagement
                             }while (choiceForSubMenu == 0) ;
                             break;
                         }
-                        case 8:
+                        case 5:
                         {
-                            userArray= new List<User>(new User().FillWithDummyUsers());
-                            vehicleArray = new List<VehicleItem>(new VehicleItem().FillVehiclesWithDummyValues(userArray));
-                            mobilephoneArray = new List<MobilephoneTechnologyItem>(new MobilephoneTechnologyItem().FillMobilesphonesWithDummyItems(userArray));
-                            computerArray= new List<ComputerTechnologyItem>(new ComputerTechnologyItem().FillComputerTechnologyWithDummyItems());
+                            PrintUserList(userList);
+                            Console.WriteLine("Press any button to return to main menu.");
+                            Console.ReadKey();
+                            break;
+                        }
+                        case 9:
+                        {
+                            userList= new List<User>(new User().FillWithDummyUsers());
+                            vehicleList = new List<VehicleItem>(new VehicleItem().FillVehiclesWithDummyValues(userList));
+                            mobileList = new List<MobilephoneTechnologyItem>(new MobilephoneTechnologyItem().FillMobilesphonesWithDummyItems(userList));
+                            computerList = new List<ComputerTechnologyItem>(new ComputerTechnologyItem().FillComputerTechnologyWithDummyItems());
+                            PrintUserList(userList);
+                            Console.WriteLine("Press any button to view vehicle list.");
+                            Console.ReadKey();
+                            Console.Clear();
+                            PrintVehicleList(vehicleList);
+                            Console.WriteLine("Press any button to view mobile list.");
+                            Console.ReadKey();
+                            Console.Clear();
+                            PrintMobilephoneList(mobileList);
+                            Console.WriteLine("Press any button to view computer list.");
+                            Console.ReadKey();
+                            Console.Clear();
+                            PrintComputerList(computerList);
+                            Console.WriteLine("Press any key to return to main menu");
+                            Console.ReadKey();
                             break;
                         }
                         default:
@@ -90,14 +112,45 @@ namespace InventoryManagement
             Console.WriteLine("| 2. Add or remove  mobilephone inventory data              |");
             Console.WriteLine("| 3. Add or remove  computer inventory data                 |");
             Console.WriteLine("| 4. Add or remove vehicle inventory data                   |");
-            Console.WriteLine("| 5. Run requests on mobile inventory data                  |");
-            Console.WriteLine("| 6. Run requests on vehicle inventory data                 |");
-            Console.WriteLine("| 7. Run requests computer inventory data                   |");
-            Console.WriteLine("| 8. Press this to generate random data for every inventory |");
+            Console.WriteLine("| 5. Print all users                                        |");
+            Console.WriteLine("| 6. Run requests on mobile inventory data                  |");
+            Console.WriteLine("| 7. Run requests on vehicle inventory data                 |");
+            Console.WriteLine("| 8. Run requests computer inventory data                   |");
+            Console.WriteLine("| 9. Press this to generate random data for every inventory |");
             Console.WriteLine("|                                                           |");
             Console.WriteLine("|      Any number choice not within the given number        |");
             Console.WriteLine("|                options stops execution                    |");
             Console.WriteLine("|___________________________________________________________|");
+        }
+
+        private static void PrintUserList(List<User> argUserListPassed)
+        {
+            foreach (var user in argUserListPassed )
+                user.PrintUserInfo();
+        }
+
+        private static void PrintVehicleList(List<VehicleItem> argVehicleListPassed)
+        {
+            foreach (var vehicle in argVehicleListPassed)
+            {
+                vehicle.PrintVehicleInfo();
+            }
+        }
+
+        private static void PrintMobilephoneList(List<MobilephoneTechnologyItem> argMobilephoneListPassed)
+        {
+            foreach (var phone in argMobilephoneListPassed)
+            {
+                phone.PrintMobilephoneInfo();
+            }
+        }
+
+        private static void PrintComputerList(List<ComputerTechnologyItem> argComputerListPassed)
+        {
+            foreach (var computerTechnologyItem in argComputerListPassed)
+            {
+                computerTechnologyItem.PrintComputerInfo();
+            }
         }
     }
 
@@ -130,7 +183,6 @@ namespace InventoryManagement
     {
         Asus,
         Alienware,
-        Microsoft,
         Dell,
         Toshiba,
         HP

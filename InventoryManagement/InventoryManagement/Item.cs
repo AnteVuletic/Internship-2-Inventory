@@ -9,7 +9,7 @@ namespace InventoryManagement
 {
     public class Item
     {
-        public static Guid SerialNumberGuid { get; private set; }
+        public Guid SerialNumberGuid { get; private set; }
         public string Description { get; set; }
         public DateTime DateOfWarrantyEnd { get; set; }
         public int PriceOnPurchase { get; set; }
@@ -27,11 +27,6 @@ namespace InventoryManagement
             DateOfWarrantyEnd = dateOfWarrantyEnd;
             PriceOnPurchase = priceOnPurchase;
             DateOfPurchase = dateOfPurchase;
-        }
-
-        public Guid GetGuid()
-        {
-            return SerialNumberGuid;
         }
 
         public Boolean IsGuid(Guid argPassedGuid)

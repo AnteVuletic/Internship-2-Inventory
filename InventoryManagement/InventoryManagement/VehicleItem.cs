@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -36,6 +37,24 @@ namespace InventoryManagement
             Manufacturer = manufacturer;
         }
 
+        public void PrintVehicleInfo()
+        {
+            Console.WriteLine(" _______________________________________________ ");
+            Console.WriteLine("                                 ");
+            Console.WriteLine($" Vehicle guid: {SerialNumberGuid}");
+            Console.WriteLine($" User of vehicle ID: {VehicleUser.IdUser}");
+            Console.WriteLine($" User of vehicle name: {VehicleUser.NameOfUser}");
+            Console.WriteLine($" User of vehicle surname: {VehicleUser.SurnameOfUser}");
+            Console.WriteLine($" Vehicle Model: {Manufacturer}");
+            Console.WriteLine($" Vehicle distance ran: {DistanceTraveledWithVehicle} km");
+            Console.WriteLine($" Registration date: {RegistrationDateTime.Day}/{RegistrationDateTime.Month}/{RegistrationDateTime.Year}");
+            Console.WriteLine($" Vehicle description: {Description}");
+            Console.WriteLine($" Vehicle warranty end: {DateOfWarrantyEnd.Month}/{DateOfWarrantyEnd.Year}");
+            Console.WriteLine($" Vehicle price on purchase: {PriceOnPurchase} $");
+            Console.WriteLine($" Vehicle date of purchase: {DateOfPurchase.Month}/{DateOfPurchase.Year}");
+            Console.WriteLine("________________________________________________");
+            Console.WriteLine();
+        }
         public VehicleItem[] FillVehiclesWithDummyValues(List<User> usersPassed)
         {
             var vehicleArray = new VehicleItem[10];
@@ -50,7 +69,7 @@ namespace InventoryManagement
                     (1000 * (1+vehicleIterator)),
                     (new DateTime(2017,1+vehicleIterator,1)),
                     randomManufacturer,
-                    (new DateTime(2018,2 + vehicleIterator,1)),
+                    (new DateTime(2018,2 + vehicleIterator,5+vehicleIterator)),
                     usersPassed[new Random(vehicleIterator).Next(0,usersPassed.Count-1)],
                     random.Next(10000,150000));
             }

@@ -26,6 +26,22 @@ namespace InventoryManagement
             Manufacturer = manufacturer;
         }
 
+        public void PrintComputerInfo()
+        {
+            Console.WriteLine(" _______________________________________________ ");
+            Console.WriteLine("                                 ");
+            Console.WriteLine($" Computer guid: {SerialNumberGuid}");
+            Console.WriteLine(Portable ? $" Computer is portable." : $" Computer is not portable");
+            Console.WriteLine($" Computer OS is: {OperatingSystem}");
+            Console.WriteLine($" Computer Model: {Manufacturer}");
+            Console.WriteLine($" Computer description: {Description}");
+            Console.WriteLine($" Computer warranty end: {DateOfWarrantyEnd.Month}/{DateOfWarrantyEnd.Year}");
+            Console.WriteLine($" Computer price on purchase: {PriceOnPurchase} $");
+            Console.WriteLine($" Computer date of purchase: {DateOfPurchase.Month}/{DateOfPurchase.Year}");
+            Console.WriteLine("________________________________________________");
+            Console.WriteLine();
+        }
+
         public ComputerTechnologyItem[] FillComputerTechnologyWithDummyItems()
         {
             var computerArray = new ComputerTechnologyItem[10];

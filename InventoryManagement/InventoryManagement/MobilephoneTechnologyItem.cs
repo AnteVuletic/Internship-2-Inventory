@@ -36,6 +36,23 @@ namespace InventoryManagement
             MobilephoneUser = mobilephoneUser;
             Manufacturer = manufacturer;
         }
+        public void PrintMobilephoneInfo()
+        {
+            Console.WriteLine(" _______________________________________________ ");
+            Console.WriteLine("                                 ");
+            Console.WriteLine($" Vehicle guid: {SerialNumberGuid}");
+            Console.WriteLine($" User of mobilephone ID: {MobilephoneUser.IdUser}");
+            Console.WriteLine($" User of mobilephone name: {MobilephoneUser.NameOfUser}");
+            Console.WriteLine($" User of mobilephone surname: {MobilephoneUser.SurnameOfUser}");
+            Console.WriteLine($" Mobile phonenumber: {PhoneNumber}");
+            Console.WriteLine($" Mobilephone Model: {Manufacturer}");
+            Console.WriteLine($" Mobilephone description: {Description}");
+            Console.WriteLine($" Mobilephone warranty end: {DateOfWarrantyEnd.Month}/{DateOfWarrantyEnd.Year}");
+            Console.WriteLine($" Mobilephone price on purchase: {PriceOnPurchase} $");
+            Console.WriteLine($" Mobilephone date of purchase: {DateOfPurchase.Month}/{DateOfPurchase.Year}");
+            Console.WriteLine("________________________________________________");
+            Console.WriteLine();
+        }
         public MobilephoneTechnologyItem[] FillMobilesphonesWithDummyItems(List<User> usersPassed)
         {
             var mobilephoneArray = new MobilephoneTechnologyItem[10];
