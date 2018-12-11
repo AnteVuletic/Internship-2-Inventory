@@ -27,6 +27,10 @@ namespace InventoryManagement
             Manufacturer = manufacturer;
         }
 
+        public Boolean IsOperatingSystem(string argOperatingSystemString)
+        {
+            return OperatingSystem.ToString().Equals(argOperatingSystemString);
+        }
         public void PrintComputerInfo()
         {
             Console.WriteLine(" _______________________________________________ ");

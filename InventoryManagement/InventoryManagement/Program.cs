@@ -316,7 +316,7 @@ namespace InventoryManagement
                                             if (phone.IsWarrantyEndYear(yearEntered))
                                             {
                                                 phone.MobilephoneUser.PrintUserInfo();
-                                                Console.WriteLine();
+                                                Console.WriteLine("~ Phone number of user:" + phone.PhoneNumber);
                                             }
                                         }
                                         Console.WriteLine("Press any button to return to sub menu.");
@@ -334,6 +334,7 @@ namespace InventoryManagement
                                             if (phone.IsGuid(enteredSerialNumber))
                                             {
                                                 Console.WriteLine("Estimated value is: " + phone.GetRealValue());
+                                                Console.WriteLine("Difference since new is: " + (phone.PriceOnPurchase - phone.GetRealValue()));
                                                 phone.PrintMobilephoneInfo();
                                                 printedSomething++;
                                             }
@@ -356,19 +357,232 @@ namespace InventoryManagement
                         }
                         case 7:
                         {
-                            PrintComputerList(computerList);
-                            Console.WriteLine("Press any button to return to main menu.");
-                            Console.ReadKey();
+                            do
+                            {
+                                Console.Clear();
+                                Console.WriteLine(" __________________________________________________________________ ");
+                                Console.WriteLine("|                                                                  |");
+                                Console.WriteLine("| 1.Print all computer inventory                                   |");
+                                Console.WriteLine("| 2.Print depending on serial entered                              |");
+                                Console.WriteLine("| 3.Print all computers by entered operating system                |");
+                                Console.WriteLine("| 4.Print all computers who's warranty is expiring in year entered |");
+                                Console.WriteLine("| 5.Current estimated value of computer. [Enter serial]            |");
+                                Console.WriteLine("|   [Optionally enter any value to return to main menu]            |");
+                                Console.WriteLine("|__________________________________________________________________|");
+                                int.TryParse(Console.ReadLine(), out choiceForSubMenu);
+                                    switch (choiceForSubMenu)
+                                {
+                                    case 1:
+                                    {
+                                        Console.Clear();
+                                        PrintComputerList(computerList);
+                                        Console.WriteLine("Press any button to return to sub menu.");
+                                        Console.ReadKey();
+                                        break;
+                                    }
+                                    case 2:
+                                    {
+                                        var printedSomething = 0;
+                                        Console.WriteLine("Please enter part or whole guid:");
+                                        var enteredSerialNumber = Console.ReadLine();
+                                        Console.Clear();
+                                        foreach (var computer in computerList)
+                                        {
+                                            if (computer.IsGuid(enteredSerialNumber))
+                                            {
+                                                computer.PrintComputerInfo();
+                                                printedSomething++;
+                                            }
+                                        }
+                                        if (printedSomething == 0)
+                                            Console.Write("Computer not found. ");
+                                        Console.WriteLine("Press any button to return to sub menu.");
+                                        Console.ReadKey();
+                                        break;
+                                    }
+                                    case 3:
+                                    {
+                                        var printedSomething = 0;
+                                        Console.WriteLine("Please enter operating system:");
+                                        var operatingSystemEntered = Console.ReadLine();
+                                        Console.Clear();
+                                        foreach (var computer in computerList)
+                                        {
+                                            if (computer.IsOperatingSystem(operatingSystemEntered))
+                                            {
+                                                printedSomething++;
+                                                computer.PrintComputerInfo();
+                                            }
+                                        }
+                                        if (printedSomething == 0)
+                                            Console.Write("Computer not found. ");
+                                        Console.WriteLine("Press any button to return to sub menu.");
+                                        Console.ReadKey();
+                                        break;
+                                    }
+                                    case 4:
+                                    {
+                                        Console.WriteLine("Enter year you're interested in:");
+                                        var yearEntered = int.Parse(Console.ReadLine());
+                                        Console.Clear();
+                                        foreach (var computer in computerList)
+                                        {
+                                            if (computer.IsWarrantyEndYear(yearEntered))
+                                            {
+                                                computer.PrintComputerInfo();
+                                                Console.WriteLine();
+                                            }
+                                        }
+                                        Console.WriteLine("Press any button to return to sub menu.");
+                                        Console.ReadKey();
+                                        break;
+                                    }
+                                    case 5:
+                                    {
+                                        var printedSomething = 0;
+                                        Console.WriteLine("Please enter part or whole guid:");
+                                        var enteredSerialNumber = Console.ReadLine();
+                                        Console.Clear();
+                                        foreach (var computer in computerList)
+                                        {
+                                            if (computer.IsGuid(enteredSerialNumber))
+                                            {
+                                                Console.WriteLine("Estimated value is: " + computer.GetRealValue());
+                                                Console.WriteLine("Difference since new is: " + (computer.PriceOnPurchase - computer.GetRealValue()));
+                                                computer.PrintComputerInfo();
+                                                printedSomething++;
+                                            }
+                                        }
+                                        if (printedSomething == 0)
+                                            Console.Write("Computer not found. ");
+                                        Console.WriteLine("Press any button to return to sub menu.");
+                                        Console.ReadKey();
+                                        break;
+                                    }
+                                    default:
+                                    {
+                                        choiceForSubMenu = 99;
+                                        break;
+                                    }
+                                }
+                            } while (choiceForSubMenu != 99);
+                            
                             break;
                         }
                         case 8:
                         {
-                            PrintVehicleList(vehicleList);
+                            do
+                            {
+                                Console.Clear();
+                                Console.WriteLine(" __________________________________________________________________ ");
+                                Console.WriteLine("|                                                                  |");
+                                Console.WriteLine("| 1.Print all vehicle inventory                                    |");
+                                Console.WriteLine("| 2.Print depending on serial entered                              |");
+                                Console.WriteLine("| 3.Print all vehicles who's warranty is expiring next month       |");
+                                Console.WriteLine("| 4.Current estimated value of vehicle. [Enter serial]             |");
+                                Console.WriteLine("|   [Optionally enter any value to return to main menu]            |");
+                                Console.WriteLine("|__________________________________________________________________|");
+                                int.TryParse(Console.ReadLine(), out choiceForSubMenu);
+                                switch (choiceForSubMenu)
+                                {
+                                    case 1:
+                                    {
+                                        Console.Clear();
+                                        PrintVehicleList(vehicleList);
+                                        Console.WriteLine("Press any button to return to sub menu.");
+                                        Console.ReadKey();
+                                        break;
+                                    }
+                                    case 2:
+                                    {
+                                        var printedSomething = 0;
+                                        Console.WriteLine("Please enter part or whole guid:");
+                                        var enteredSerialNumber = Console.ReadLine();
+                                        Console.Clear();
+                                        foreach (var vehicle in vehicleList)
+                                        {
+                                            if (vehicle.IsGuid(enteredSerialNumber))
+                                            {
+                                                vehicle.PrintVehicleInfo();
+                                                printedSomething++;
+                                            }
+                                        }
+                                        if (printedSomething == 0)
+                                            Console.Write("Vehicle not found. ");
+                                        Console.WriteLine("Press any button to return to sub menu.");
+                                        Console.ReadKey();
+                                        break;
+                                    }
+                                    case 3:
+                                    {
+                                        var printedSomething = 0;
+                                        Console.Clear();
+                                        foreach (var vehicle in vehicleList)
+                                        {
+                                            if (vehicle.IsRegistrationWithinMonth())
+                                            {
+                                                vehicle.PrintVehicleInfo();
+                                                printedSomething++;
+                                            }
+                                        }
+                                        if(printedSomething == 0)
+                                            Console.Write("No vehicles registrations expire next month.");
+                                        Console.WriteLine("Press any button to return to sub menu");
+                                        Console.ReadKey();
+                                        break;
+                                    }
+                                    case 4:
+                                    {
+                                        var printedSomething = 0;
+                                        Console.WriteLine("Please enter part or whole guid:");
+                                        var enteredSerialNumber = Console.ReadLine();
+                                        Console.Clear();
+                                        foreach (var vehicle in vehicleList)
+                                        {
+                                            if (vehicle.IsGuid(enteredSerialNumber))
+                                            {
+                                                Console.WriteLine("Estimated value is: " + vehicle.GetRealValue());
+                                                Console.WriteLine("Difference since new is: " + (vehicle.PriceOnPurchase - vehicle.GetRealValue()));
+                                                vehicle.PrintVehicleInfo();
+                                                printedSomething++;
+                                            }
+                                        }
+                                        if (printedSomething == 0)
+                                            Console.Write("Vehicle not found. ");
+                                        Console.WriteLine("Press any button to return to sub menu.");
+                                        Console.ReadKey();
+                                        break;
+                                    }
+                                    default:
+                                    {
+                                        choiceForSubMenu = 99;
+                                        break;
+                                    }
+                                    }
+                                } while (choiceForSubMenu != 99);
+
+                            break;
+                        }
+                        case 9:
+                        {
+                            Console.Clear();
+                            var numberOfBatteries = 0;
+                            foreach (var computer in computerList)
+                            {
+                                if (computer.BatteryBoolean)
+                                    numberOfBatteries++;
+                            }
+                            foreach (var phone in mobileList)
+                            {
+                                if (phone.BatteryBoolean)
+                                    numberOfBatteries++;
+                            }
+                            Console.WriteLine("Number of batteries in the company is: " + numberOfBatteries);
                             Console.WriteLine("Press any button to return to main menu.");
                             Console.ReadKey();
                             break;
                         }
-                        case 9:
+                        case 10:
                         {
                             userList= new List<User>(new User().FillWithDummyUsers());
                             vehicleList = new List<VehicleItem>(new VehicleItem().FillVehiclesWithDummyValues(userList));
@@ -416,7 +630,8 @@ namespace InventoryManagement
             Console.WriteLine("| 6. Run requests on mobile inventory data                  |");
             Console.WriteLine("| 7. Run requests computer inventory data                   |");
             Console.WriteLine("| 8. Run requests on vehicle inventory data                 |");
-            Console.WriteLine("| 9. Press this to generate random data for every inventory |");
+            Console.WriteLine("| 9. Count number of batteries in inventory                 |");
+            Console.WriteLine("| 10. Press this to generate random data for every inventory|");
             Console.WriteLine("|                                                           |");
             Console.WriteLine("|      Any number choice not within the given number        |");
             Console.WriteLine("|                options stops execution                    |");
