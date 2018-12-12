@@ -121,12 +121,16 @@ namespace InventoryManagement
 
         public Boolean IsRegistrationWithinMonth()
         {
-            return ((int)(DateTime.Now.Month - RegistrationDateTime.Month)) == 1;
+            if (RegistrationDateTime.Month == 1 && DateTime.Now.Month == 12)
+                return true;
+            return (int)(RegistrationDateTime.Month - DateTime.Now.Month) == 1;
         }
 
         public int GetRealValue()
         {
             var modifierIndex = (double)DistanceTraveledWithVehicle/20000;
+            if ((int)modifierIndex == 0)
+                return PriceOnPurchase;
             modifierIndex /= 10;
             if (modifierIndex > 0.8)
                 modifierIndex = 0.8;
